@@ -14,9 +14,9 @@ interface ArrivalItem {
   lstcarAt: string
 }
 
-export const fetchArrivalList = async () => {
-  const { data } = await api.get(`/json/realtimeStationArrival/0/5/모란`)
-  const temp = data.realtimeArrivalList
-  console.log('::: fetchArrivalList : data : ', temp)
-  return temp
+export const fetchArrivalList = async (): Promise<ArrivalItem[]> => {
+  const { data } = await api.get<{ realtimeArrivalList: ArrivalItem[] }>(
+    `/json/realtimeStationArrival/0/5/모란`
+  )
+  return data.realtimeArrivalList || [] // 빈 배열로 기본값 처리
 }
