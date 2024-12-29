@@ -1,21 +1,12 @@
-import Image from 'next/image'
 import styles from './page.module.css'
-import { fetchArrivalList } from '@/app/api/subway'
+import SearchPlaceInfo from './SearchPlaceInfo'
 
-export default async function Home() {
-  const arrivalList = await fetchArrivalList()
-
+export default function Home() {
   return (
     <div className={styles.page}>
       <div>
-        <h2>Arrival List</h2>
-        <ul>
-          {arrivalList.map((item, index) => (
-            <li key={index}>
-              {item.trainLineNm}: {item.arvlMsg2}
-            </li>
-          ))}
-        </ul>
+        <h2>Place Information</h2>
+        <SearchPlaceInfo />
       </div>
     </div>
   )
