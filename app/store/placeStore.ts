@@ -1,34 +1,29 @@
 import { create } from 'zustand'
-import { fetchArrivalList } from '@/api/place'
-
-interface ArrivalItem {
-  trainLineNm: string
-  arvlMsg2: string
-}
+import { getCityData, CityData } from '@/api/place'
 
 interface PlaceState {
   searchQuery: string
-  arrivalList: ArrivalItem[]
+  cityData: CityData | null
   setSearchQuery: (query: string) => void
-  loadArrivalList: (name: string) => Promise<void>
+  setCityData: (name: string) => Promise<void>
 }
 
 export const usePlaceStore = create<PlaceState>((set) => ({
   searchQuery: '',
-  arrivalList: [],
+  cityData: null,
   setSearchQuery: (query) => set({ searchQuery: query }),
-  loadArrivalList: async (name) => {
+  setCityData: async (name) => {
     if (!name.trim()) {
-      set({ arrivalList: [] })
+      set({ cityData: null })
       return
     }
 
     try {
-      const data = await fetchArrivalList(name)
-      set({ arrivalList: data })
+      const data = await getCityData(name)
+      set({ cityData: data })
     } catch (error) {
-      console.error('Failed to load arrival list:', error)
-      set({ arrivalList: [] })
+      set({ cityData: null })
+      console.error('Error fetching city data:', error)
     }
   },
 }))
