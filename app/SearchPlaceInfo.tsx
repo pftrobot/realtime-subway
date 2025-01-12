@@ -1,6 +1,8 @@
 'use client'
 
 import { usePlaceStore } from '@/store/placeStore'
+import styles from '@/styles/info.module.scss'
+import Icon from '@/common/Icon'
 
 export default function SearchPlaceInfo() {
   const { searchQuery, cityData, setSearchQuery, setCityData } = usePlaceStore()
@@ -16,8 +18,8 @@ export default function SearchPlaceInfo() {
   }
 
   return (
-    <div>
-      <div>
+    <div className={styles.wrap}>
+      <div className={styles.search}>
         <input
           type="text"
           value={searchQuery}
@@ -29,8 +31,54 @@ export default function SearchPlaceInfo() {
       </div>
       {cityData ? (
         <section>
-          <p>지금 {cityData.AREA_NM}은</p>
+          <p className={styles.title}>지금 {cityData.AREA_NM}은</p>
           <p>{cityData.LIVE_PPLTN_STTS?.AREA_CONGEST_MSG}</p>
+          <div className={styles.summary}>
+            <div className={styles.summary_item}>
+              <div className={styles.text}>
+                <p className={styles.number}>
+                  {cityData.LIVE_PPLTN_STTS?.AREA_CONGEST_LVL}
+                </p>
+                <p>population</p>
+              </div>
+              <div className={styles.icon}>
+                <Icon type="population" size={48} color="#fff" />
+              </div>
+            </div>
+            <div className={styles.summary_item}>
+              <div className={styles.text}>
+                <p className={styles.number}>
+                  {cityData.ROAD_TRAFFIC_STTS?.ROAD_TRAFFIC_IDX}
+                </p>
+                <p>road traffic</p>
+              </div>
+              <div className={styles.icon}>
+                <Icon type="road" size={48} color="#fff" />
+              </div>
+            </div>
+            <div className={styles.summary_item}>
+              <div className={styles.text}>
+                <p className={styles.number}>
+                  {cityData.WEATHER_STTS?.TEMP} &ordm;
+                </p>
+                <p>temperature</p>
+              </div>
+              <div className={styles.icon}>
+                <Icon type="weather" size={48} color="#fff" />
+              </div>
+            </div>
+            <div className={styles.summary_item}>
+              <div className={styles.text}>
+                <p className={styles.number}>
+                  {cityData.WEATHER_STTS?.AIR_IDX}
+                </p>
+                <p>air quality</p>
+              </div>
+              <div className={styles.icon}>
+                <Icon type="dust" size={48} viewBox={256} color="#fff" isFill />
+              </div>
+            </div>
+          </div>
           <br />
           <p>장소 혼잡도 지표 : {cityData.LIVE_PPLTN_STTS?.AREA_CONGEST_LVL}</p>
           <p>남성 인구 비율 : {cityData.LIVE_PPLTN_STTS?.MALE_PPLTN_RATE}</p>
